@@ -1,0 +1,57 @@
+syntax = "proto3";
+package mnstrv2servergrpc;
+
+import "users.proto";
+
+message RegisterRequest {
+  string email = 1;
+  optional string phone = 2;
+  string password = 3;
+  string display_name = 4;
+}
+
+message RegisterResponse { bool success = 1; }
+
+message Session {
+  string id = 1;
+  User user = 2;
+  string token = 3;
+  string expires_at = 4;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse { Session session = 1; }
+
+message LogoutRequest { string token = 1; }
+
+message LogoutResponse { bool success = 1; }
+
+message ForgotPasswordRequest { string email = 1; }
+
+message ForgotPasswordResponse { bool success = 1; }
+
+message ResetPasswordRequest {
+  string code = 1;
+  string password = 3;
+}
+
+message ResetPasswordResponse { bool success = 1; }
+
+message VerifyEmailRequest { string code = 1; }
+
+message VerifyEmailResponse { bool success = 1; }
+
+message VerifyPhoneRequest { string code = 1; }
+
+service SessionService {
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse);
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
+}

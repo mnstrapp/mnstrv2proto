@@ -1,0 +1,25 @@
+syntax = "proto3";
+package mnstrv2servergrpc;
+
+message Mnstr {
+  string id = 1;
+  string user_id = 2;
+  string mnstr_name = 3;
+  string mnstr_description = 4;
+  string mnstr_qr_code = 5;
+  int32 current_level = 6;
+  int32 current_experience = 7;
+  int32 current_health = 8;
+  int32 max_health = 9;
+  int32 current_attack = 10;
+  int32 max_attack = 11;
+  int32 current_defense = 12;
+  int32 max_defense = 13;
+  int32 current_speed = 14;
+  int32 max_speed = 15;
+  int32 current_intelligence = 16;
+  int32 max_intelligence = 17;
+  int32 current_magic = 18;
+  int32 max_magic = 19;
+  int32 experience_to_next_level = 20;
+}

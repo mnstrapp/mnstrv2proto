@@ -1,0 +1,34 @@
+syntax = "proto3";
+package mnstrv2servergrpc;
+
+import "transactions.proto";
+
+message Wallet {
+  string id = 1;
+  string user_id = 2;
+  int32 coins = 3;
+  repeated Transaction transactions = 4;
+}
+
+message GetWalletRequest { string id = 1; }
+
+message GetWalletResponse { Wallet wallet = 1; }
+
+message ListWalletsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  optional string user_id = 3;
+}
+
+message ListWalletsResponse { repeated Wallet wallets = 1; }
+
+message StreamWalletsRequest { optional string user_id = 1; }
+
+message StreamWalletsResponse { Wallet wallet = 1; }
+
+service WalletService {
+  rpc GetWallet(GetWalletRequest) returns (GetWalletResponse);
+  rpc ListWallets(ListWalletsRequest) returns (ListWalletsResponse);
+  rpc StreamWallets(StreamWalletsRequest)
+      returns (stream StreamWalletsResponse);
+}
