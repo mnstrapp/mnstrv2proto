@@ -1,5 +1,5 @@
 syntax = "proto3";
-package mnstrv2servergrpc;
+package mnstrv2;
 
 import "users.proto";
 
