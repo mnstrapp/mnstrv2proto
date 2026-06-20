@@ -23,3 +23,135 @@ message Mnstr {
   int32 max_magic = 19;
   int32 experience_to_next_level = 20;
 }
+
+enum MnstrOrderBy {
+  MNSTR_ORDER_BY_UNSPECIFIED = 0;
+  MNSTR_ORDER_BY_CREATED_AT = 1;
+  MNSTR_ORDER_BY_UPDATED_AT = 2;
+  MNSTR_ORDER_BY_NAME = 3;
+  MNSTR_ORDER_BY_LEVEL = 4;
+  MNSTR_ORDER_BY_EXPERIENCE = 5;
+  MNSTR_ORDER_BY_HEALTH = 6;
+  MNSTR_ORDER_BY_ATTACK = 7;
+  MNSTR_ORDER_BY_DEFENSE = 8;
+  MNSTR_ORDER_BY_SPEED = 9;
+  MNSTR_ORDER_BY_INTELLIGENCE = 10;
+  MNSTR_ORDER_BY_MAGIC = 11;
+}
+
+enum MnstrOrderDirection {
+  MNSTR_ORDER_DIRECTION_UNSPECIFIED = 0;
+  MNSTR_ORDER_DIRECTION_ASC = 1;
+  MNSTR_ORDER_DIRECTION_DESC = 2;
+}
+
+message MnstrInput {
+  optional string id = 1;
+  optional string mnstr_name = 3;
+  optional string mnstr_description = 4;
+  optional string mnstr_qr_code = 5;
+  optional int32 current_level = 9;
+  optional int32 current_experience = 10;
+  optional int32 current_health = 11;
+  optional int32 max_health = 12;
+  optional int32 current_attack = 13;
+  optional int32 max_attack = 14;
+  optional int32 current_defense = 15;
+  optional int32 max_defense = 16;
+  optional int32 current_speed = 17;
+  optional int32 max_speed = 18;
+  optional int32 current_intelligence = 19;
+  optional int32 max_intelligence = 20;
+  optional int32 current_magic = 21;
+  optional int32 max_magic = 22;
+}
+
+message BatchMnstrInput { repeated MnstrInput mnstrs = 1; }
+
+message ListMnstrsRequest {
+  string token = 1;
+  optional MnstrOrderBy order_by = 2;
+  optional MnstrOrderDirection order_direction = 3;
+}
+
+message ListMnstrsResponse { repeated Mnstr mnstrs = 1; }
+
+message GetMnstrByQrCodeRequest {
+  string token = 1;
+  string mnstr_qr_code = 2;
+}
+
+message GetMnstrByQrCodeResponse { Mnstr mnstr = 1; }
+
+message CollectMnstrRequest {
+  string token = 1;
+  string mnstr_qr_code = 2;
+}
+
+message CollectMnstrResponse { Mnstr mnstr = 1; }
+
+message CreateMnstrRequest {
+  string token = 1;
+  optional string mnstr_name = 2;
+  optional string mnstr_description = 3;
+  string mnstr_qr_code = 4;
+  optional int32 current_health = 5;
+  optional int32 max_health = 6;
+  optional int32 current_attack = 7;
+  optional int32 max_attack = 8;
+  optional int32 current_defense = 9;
+  optional int32 max_defense = 10;
+  optional int32 current_speed = 11;
+  optional int32 max_speed = 12;
+  optional int32 current_intelligence = 13;
+  optional int32 max_intelligence = 14;
+  optional int32 current_magic = 15;
+  optional int32 max_magic = 16;
+}
+
+message CreateMnstrResponse { Mnstr mnstr = 1; }
+
+message CreateMnstrBatchRequest {
+  string token = 1;
+  BatchMnstrInput mnstrs = 2;
+}
+
+message CreateMnstrBatchResponse { repeated Mnstr mnstrs = 1; }
+
+message UpdateMnstrRequest {
+  string token = 1;
+  string id = 2;
+  optional string mnstr_name = 3;
+  optional string mnstr_description = 4;
+  optional int32 current_health = 6;
+  optional int32 max_health = 7;
+  optional int32 current_attack = 8;
+  optional int32 max_attack = 9;
+  optional int32 current_defense = 10;
+  optional int32 max_defense = 11;
+  optional int32 current_speed = 12;
+  optional int32 max_speed = 13;
+  optional int32 current_intelligence = 14;
+  optional int32 max_intelligence = 15;
+  optional int32 current_magic = 16;
+  optional int32 max_magic = 17;
+}
+
+message UpdateMnstrResponse { Mnstr mnstr = 1; }
+
+message UpdateMnstrBatchRequest {
+  string token = 1;
+  BatchMnstrInput mnstrs = 2;
+}
+
+message UpdateMnstrBatchResponse { repeated Mnstr mnstrs = 1; }
+
+service MnstrService {
+  rpc List(ListMnstrsRequest) returns (ListMnstrsResponse);
+  rpc GetByQrCode(GetMnstrByQrCodeRequest) returns (GetMnstrByQrCodeResponse);
+  rpc Collect(CollectMnstrRequest) returns (CollectMnstrResponse);
+  rpc Create(CreateMnstrRequest) returns (CreateMnstrResponse);
+  rpc CreateBatch(CreateMnstrBatchRequest) returns (CreateMnstrBatchResponse);
+  rpc Update(UpdateMnstrRequest) returns (UpdateMnstrResponse);
+  rpc UpdateBatch(UpdateMnstrBatchRequest) returns (UpdateMnstrBatchResponse);
+}
