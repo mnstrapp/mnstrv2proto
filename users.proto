@@ -16,3 +16,15 @@ message User {
   repeated Mnstr mnstrs = 9;
   optional Wallet wallet = 10;
 }
+
+message MyUserRequest {
+  string token = 1;
+}
+
+message MyUserResponse {
+  User user = 1;
+}
+
+service UserService {
+  rpc MyUser(MyUserRequest) returns (MyUserResponse);
+}
