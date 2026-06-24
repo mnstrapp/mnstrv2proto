@@ -49,6 +49,10 @@ message VerifyPhoneRequest { string code = 1; }
 
 message VerifyPhoneResponse { bool success = 1; }
 
+message UnregisterRequest { string token = 1; }
+
+message UnregisterResponse { bool success = 1; }
+
 service SessionService {
   rpc Register(RegisterRequest) returns (RegisterResponse);
   rpc Login(LoginRequest) returns (LoginResponse);
@@ -57,4 +61,5 @@ service SessionService {
   rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
   rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
   rpc VerifyPhone(VerifyPhoneRequest) returns (VerifyPhoneResponse);
+  rpc Unregister(UnregisterRequest) returns (UnregisterResponse);
 }
