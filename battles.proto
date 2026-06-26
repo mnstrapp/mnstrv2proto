@@ -1,0 +1,56 @@
+syntax = "proto3";
+package mnstrv2;
+
+import "google/protobuf/timestamp.proto";
+import "mnstr.proto";
+import "users.proto";
+
+message Battle {
+  string id = 1;
+  User challenger = 2;
+  Mnstr challenger_mnstr = 3;
+  User opponent = 4;
+  Mnstr opponent_mnstr = 5;
+  User winner = 6;
+  Mnstr winner_mnstr = 7;
+}
+
+message BattleLog {
+  string id = 1;
+  string battle_id = 2;
+  User user = 3;
+  Mnstr mnstr = 4;
+  BattleLogAction action = 5;
+  string data = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+enum BattleLogAction {
+  BATTLE_LOG_ACTION_UNSPECIFIED = 0;
+  BATTLE_LOG_ACTION_JOINED = 1;
+  BATTLE_LOG_ACTION_ATTACKED = 2;
+  BATTLE_LOG_ACTION_DEFENDED = 3;
+  BATTLE_LOG_ACTION_MISSED = 4;
+  BATTLE_LOG_ACTION_HIT = 5;
+  BATTLE_LOG_ACTION_KILLED = 6;
+  BATTLE_LOG_ACTION_WON = 7;
+  BATTLE_LOG_ACTION_LOST = 8;
+  BATTLE_LOG_ACTION_ERROR = 9;
+}
+
+message BattleStatus {
+  string id = 1;
+  User user = 2;
+  Mnstr mnstr = 3;
+  User opponent = 4;
+  Battle battle = 5;
+  BattleStatusState status = 6;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+enum BattleStatusState {
+  BATTLE_STATUS_STATE_UNSPECIFIED = 0;
+  BATTLE_STATUS_STATE_IN_QUEUE = 1;
+  BATTLE_STATUS_STATE_IN_BATTLE = 2;
+  BATTLE_STATUS_STATE_WATCHING = 3;
+}
