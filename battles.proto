@@ -13,6 +13,8 @@ message Battle {
   Mnstr opponent_mnstr = 5;
   User winner = 6;
   Mnstr winner_mnstr = 7;
+  repeated BattleLog logs = 8;
+  repeated BattleStatus statuses = 9;
 }
 
 message BattleLog {
@@ -20,22 +22,9 @@ message BattleLog {
   string battle_id = 2;
   User user = 3;
   Mnstr mnstr = 4;
-  BattleLogAction action = 5;
+  BattleAction action = 5;
   string data = 6;
   google.protobuf.Timestamp created_at = 7;
-}
-
-enum BattleLogAction {
-  BATTLE_LOG_ACTION_UNSPECIFIED = 0;
-  BATTLE_LOG_ACTION_JOINED = 1;
-  BATTLE_LOG_ACTION_ATTACKED = 2;
-  BATTLE_LOG_ACTION_DEFENDED = 3;
-  BATTLE_LOG_ACTION_MISSED = 4;
-  BATTLE_LOG_ACTION_HIT = 5;
-  BATTLE_LOG_ACTION_KILLED = 6;
-  BATTLE_LOG_ACTION_WON = 7;
-  BATTLE_LOG_ACTION_LOST = 8;
-  BATTLE_LOG_ACTION_ERROR = 9;
 }
 
 message BattleStatus {
@@ -53,4 +42,52 @@ enum BattleStatusState {
   BATTLE_STATUS_STATE_IN_QUEUE = 1;
   BATTLE_STATUS_STATE_IN_BATTLE = 2;
   BATTLE_STATUS_STATE_WATCHING = 3;
+}
+
+enum BattleAction {
+  BATTLE_ACTION_UNSPECIFIED = 0;
+  BATTLE_ACTION_JOINED = 1;
+  BATTLE_ACTION_LEFT = 2;
+  BATTLE_ACTION_READY = 3;
+  BATTLE_ACTION_UNREADY = 4;
+  BATTLE_ACTION_ACCEPTED = 6;
+  BATTLE_ACTION_REJECTED = 7;
+  BATTLE_ACTION_CANCELLED = 8;
+  BATTLE_ACTION_WATCHING = 9;
+  BATTLE_ACTION_LIST = 10;
+  BATTLE_ACTION_CHALLENGE = 11;
+  BATTLE_ACTION_ACCEPT = 12;
+  BATTLE_ACTION_REJECT = 13;
+  BATTLE_ACTION_GAME_STARTED = 14;
+  BATTLE_ACTION_GAME_ENDED = 15;
+  BATTLE_ACTION_MNSTR_CHOSEN = 16;
+  BATTLE_ACTION_REJOIN = 18;
+  BATTLE_ACTION_REJOINED = 19;
+  BATTLE_ACTION_ATTACK = 20;
+  BATTLE_ACTION_DEFEND = 21;
+  BATTLE_ACTION_MAGIC = 22;
+  BATTLE_ACTION_ESCAPE = 23;
+  BATTLE_ACTION_SORT_MNSTRS = 24;
+}
+
+message BattleJoinRequest {
+  string user_id = 1;
+}
+
+message BattleActionRequest {
+  string user_id = 1;
+  BattleAction action = 2;
+  optional string battle_id = 3;
+}
+
+message BattleActionResponse {
+  bool success = 1;
+  optional string error = 2;
+  optional string message = 3;
+  optional Battle battle = 4;
+}
+
+service BattleQueueService {
+  rpc BattleJoin(BattleJoinRequest) returns (stream Battle);
+  rpc BattleAction(BattleActionRequest) returns (BattleActionResponse);
 }

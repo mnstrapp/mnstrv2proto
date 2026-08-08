@@ -66,7 +66,9 @@ message MnstrInput {
   optional int32 max_magic = 22;
 }
 
-message BatchMnstrInput { repeated MnstrInput mnstrs = 1; }
+message BatchMnstrInput {
+  repeated MnstrInput mnstrs = 1;
+}
 
 message ListMnstrsRequest {
   string token = 1;
@@ -74,21 +76,27 @@ message ListMnstrsRequest {
   optional MnstrOrderDirection order_direction = 3;
 }
 
-message ListMnstrsResponse { repeated Mnstr mnstrs = 1; }
+message ListMnstrsResponse {
+  repeated Mnstr mnstrs = 1;
+}
 
 message GetMnstrByQrCodeRequest {
   string token = 1;
   string mnstr_qr_code = 2;
 }
 
-message GetMnstrByQrCodeResponse { Mnstr mnstr = 1; }
+message GetMnstrByQrCodeResponse {
+  Mnstr mnstr = 1;
+}
 
 message CollectMnstrRequest {
   string token = 1;
   string mnstr_qr_code = 2;
 }
 
-message CollectMnstrResponse { Mnstr mnstr = 1; }
+message CollectMnstrResponse {
+  Mnstr mnstr = 1;
+}
 
 message CreateMnstrRequest {
   string token = 1;
@@ -109,14 +117,18 @@ message CreateMnstrRequest {
   optional int32 max_magic = 16;
 }
 
-message CreateMnstrResponse { Mnstr mnstr = 1; }
+message CreateMnstrResponse {
+  Mnstr mnstr = 1;
+}
 
 message CreateMnstrBatchRequest {
   string token = 1;
   BatchMnstrInput mnstrs = 2;
 }
 
-message CreateMnstrBatchResponse { repeated Mnstr mnstrs = 1; }
+message CreateMnstrBatchResponse {
+  repeated Mnstr mnstrs = 1;
+}
 
 message UpdateMnstrRequest {
   string token = 1;
@@ -137,14 +149,18 @@ message UpdateMnstrRequest {
   optional int32 max_magic = 17;
 }
 
-message UpdateMnstrResponse { Mnstr mnstr = 1; }
+message UpdateMnstrResponse {
+  Mnstr mnstr = 1;
+}
 
 message UpdateMnstrBatchRequest {
   string token = 1;
   BatchMnstrInput mnstrs = 2;
 }
 
-message UpdateMnstrBatchResponse { repeated Mnstr mnstrs = 1; }
+message UpdateMnstrBatchResponse {
+  repeated Mnstr mnstrs = 1;
+}
 
 service MnstrService {
   rpc List(ListMnstrsRequest) returns (ListMnstrsResponse);
